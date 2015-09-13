@@ -5,12 +5,13 @@
 
 // Where the NeoPixels are connected
 #define NEOPIXEL_PIN 6
+#define NEOPIXEL_LEDS 8
 #define BUTTON_PIN 8
 
 fuelGauge battery;  // initialize the library
 
 qduino q;
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NEOPIXEL_LEDS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 void setup()
 {  
@@ -102,7 +103,7 @@ void loop()
 
     if (buttonState == HIGH) {
 	long leds = (millis() - pressTime) / 500 + 1;
-	if(leds > 8) { leds = 8; }
+	if(leds > strip.numPixels()) { leds = strip.numPixels(); }
 	for(int i=0; i<leds; i++) {
 	    strip.setPixelColor(i, 32, 32, 32);
 	}
